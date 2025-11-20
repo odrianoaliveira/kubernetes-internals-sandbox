@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: blue-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+      role: blue
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: nginx
+        role: blue
+    spec:
+      containers:
+      - image: nginx:alpine
+        name: blue
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 80
+        resources: {}
+        volumeMounts:
+          - name: html
+            mountPath: /usr/share/nginx/html
+      volumes:
+        - name: html
+          configMap:
+            name: blue-config
+status: {}
+
