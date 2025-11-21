@@ -6,7 +6,7 @@ metadata:
   name: public-service
 spec:
   ports:
-  - port: 9000
+  - port: 80
     protocol: TCP
     targetPort: 80
   selector:

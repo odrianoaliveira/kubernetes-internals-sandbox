@@ -6,7 +6,7 @@ metadata:
   name: green-test-service
 spec:
   ports:
-  - port: 9000
+  - port: 9001
     protocol: TCP
     targetPort: 80
   selector:
