@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: public-service
+  labels:
+    env: prod
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: stable-canary-app
+status:
+  loadBalancer: {}
