@@ -1,0 +1,4 @@
+create -f ./ --save-config
+
+get deploy my-nginx -o yaml
+// check for metadata
