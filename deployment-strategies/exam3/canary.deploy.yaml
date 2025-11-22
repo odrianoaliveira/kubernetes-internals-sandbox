@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: exam3-app
+    track: canary
+  name: exam3-canary-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: exam3-app
+      track: canary
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: exam3-app
+        track: canary
+    spec:
+      containers:
+      - image: nginxdemos/hello:0.4
+        name: hello
+        ports:
+        - containerPort: 80
+status: {}
+

@@ -1,0 +1,19 @@
+
+# ns
+k config set-context --current --namespace=dev
+
+#creat resources
+create -f ./
+
+# scale up
+k scale deploy exam3-stable-app --replicas=6
+scale deploy exam3-canary-app --replicas=2
+
+# match canary and service lables
+k edit deployments.apps exam3-canary-app
+
+# temp Pod with TTY
+k run -it --restart=Never --image=alpine temp-pod
+apk add curl
+curl <cluster-ip>
+

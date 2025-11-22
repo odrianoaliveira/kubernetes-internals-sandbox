@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: exam3-app
+    track: stable
+  name: exam3-stable-app
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: exam3-app
+      track: stable
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: exam3-app
+        track: stable
+    spec:
+      containers:
+      - image: nginxdemos/hello:0.4
+        name: hello
+        ports:
+        - containerPort: 80
+status: {}
