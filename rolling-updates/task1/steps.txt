@@ -1,0 +1,18 @@
+k create ns dev
+k get ns
+k config set-context --current --namespace=dev
+k create deploy web-app --image=nginx:1.17.8-alpine --replicas=6 --save-config
+k get pods
+
+k edit deploy web-app <== change the nginx version
+OR
+k set image deploy web-app nginx=nginx:1.29.3-alpine
+k get pods
+
+k annotate deploy web-app kubernetes.io/change-cause="Changed to nginx:1.29.3" --overwrite=true
+
+k get deploy web-app -o json | jq '.metadata.annotations'
+
+
+k rollout status deploy web-app
+
