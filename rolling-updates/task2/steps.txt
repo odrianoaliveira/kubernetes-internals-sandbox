@@ -1,0 +1,17 @@
+k config set-context --current --namespace=devs
+
+k create deploy biz-app --image=nginx:1.23.1-alpine --replicas=4 --dry-run=client -o yaml > biz-app.deploy.yaml
+
+k create -f biz-app.deploy.yaml --save-config
+
+vim biz-app.deploy.yaml
+k apply -f biz-app.deploy.yaml --record=true
+
+
+k rollout history deployment biz-app
+
+k rollout undo deploy biz-app
+
+get pods -o json | jq '.items[].spec.containers[].image'
+
+
