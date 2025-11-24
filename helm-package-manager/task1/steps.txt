@@ -1,0 +1,54 @@
+k create ns dev
+
+>helm repo add bitnami https://charts.bitnami.com/bitnami
+"bitnami" has been added to your repositories
+
+
+> helm repo list
+NAME    URL
+bitnami https://charts.bitnami.com/bitnami
+
+
+>search repo nginx --versions | head
+NAME                                    CHART VERSION   APP VERSION     DESCRIPTION
+bitnami/nginx                           22.3.2          1.29.3          NGINX Open Source is a web server that can be a...
+bitnami/nginx                           22.2.6          1.29.3          NGINX Open Source is a web server that can be a...
+bitnami/nginx                           22.2.4          1.29.3          NGINX Open Source is a web server that can be a...
+
+>helm install nginx-app bitnami/nginx -n dev
+level=WARN msg="unable to find exact version; falling back to closest available version" chart=nginx requested="" selected=22.3.2
+NAME: nginx-app
+LAST DEPLOYED: Mon Nov 24 08:59:53 2025
+NAMESPACE: dev
+STATUS: deployed
+REVISION: 1
+DESCRIPTION: Install complete
+TEST SUITE: None
+NOTES:
+CHART NAME: nginx
+CHART VERSION: 22.3.2
+APP VERSION: 1.29.3
+
+>k get all -n dev
+NAME                             READY   STATUS    RESTARTS   AGE
+pod/nginx-app-78849c8459-mkb76   1/1     Running   0          62s
+
+NAME                TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)                      AGE
+service/nginx-app   LoadBalancer   10.98.222.90   localhost     80:32224/TCP,443:30470/TCP   62s
+
+NAME                        READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx-app   1/1     1            1           62s
+
+NAME                                   DESIRED   CURRENT   READY   AGE
+replicaset.apps/nginx-app-78849c8459   1         1         1       62s
+
+>helm list -n dev
+NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART           APP VERSION
+nginx-app       dev             1               2025-11-24 08:59:53.234825 +0100 CET    deployed        nginx-22.3.2    1.29.3
+
+>helm un nginx-app -n dev
+release "nginx-app" uninstalled
+
+>k get all -n dev
+No resources found in dev namespace.
+
