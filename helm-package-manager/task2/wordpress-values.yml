@@ -1,0 +1,9 @@
+wordpressUsername: admin
+wordpressPassword: admin
+wordpressEmail: admin@admin.com
+wordpressFirstName: Jane
+wordpressLastName: Jane
+wordpressBlogName: Jane
+service:
+  type: LoadBalancer
+

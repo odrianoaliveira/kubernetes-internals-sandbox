@@ -1,0 +1,42 @@
+>helm pull --version=15.0.9 bitnami/wordpress
+
+>ll ./wordpress
+total 264
+-rw-r--r--@  1 I526407  staff   387B Nov 24 16:51 Chart.lock
+-rw-r--r--@  1 I526407  staff   1.0K Nov 24 16:51 Chart.yaml
+drwxr-xr-x@  5 I526407  staff   160B Nov 24 16:51 charts
+-rw-r--r--@  1 I526407  staff    64K Nov 24 16:51 README.md
+drwxr-xr-x@ 23 I526407  staff   736B Nov 24 16:51 templates
+-rw-r--r--@  1 I526407  staff   5.6K Nov 24 16:51 values.schema.json
+-rw-r--r--@  1 I526407  staff    45K Nov 24 16:51 values.yaml
+
+>helm show values bitnami/wordpress
+
+
+>vim wordpress-values.yml
+wordpressUsername: admin
+wordpressPassword: admin
+wordpressEmail: admin@admin.com
+wordpressFirstName: Jane
+wordpressLastName: Jane
+wordpressBlogName: Jane
+service:
+  type: LoadBalancer
+
+>helm install wordpress bitnami/wordpress --values=wordpress-values.yml -n dev --version=15.0.9
+NAME: wordpress
+LAST DEPLOYED: Mon Nov 24 17:04:37 2025
+NAMESPACE: dev
+STATUS: deployed
+REVISION: 1
+DESCRIPTION: Install complete
+TEST SUITE: None
+NOTES:
+CHART NAME: wordpress
+CHART VERSION: 15.0.9
+APP VERSION: 6.0.0
+
+>k get pods -n dev
+NAME                         READY   STATUS    RESTARTS   AGE
+wordpress-6fdf5689d9-4pgk2   0/1     Pending   0          34s
+wordpress-mariadb-0          0/1     Pending   0          34s
