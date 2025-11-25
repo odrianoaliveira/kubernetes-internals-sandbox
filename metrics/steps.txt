@@ -1,0 +1,7 @@
+>top nodes
+error: Metrics API not available
+
+>minikube start -p ckda
+
+>minikube addons enable metrics-server -p ckda
+
