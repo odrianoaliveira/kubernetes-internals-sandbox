@@ -1,0 +1,49 @@
+> helm repo list
+NAME    URL
+bitnami https://charts.bitnami.com/bitnami
+
+>helm repo update bitnami
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "bitnami" chart repository
+Update Complete. ⎈Happy Helming!⎈
+
+>helm search repo nginx --version=13.1.5
+NAME            CHART VERSION   APP VERSION     DESCRIPTION
+bitnami/nginx   13.1.5          1.23.1          NGINX Open Source is a web server that can be a...
+
+>helm show values bitnami/nginx --version=13.1.5 | less
+## @param replicaCount Number of NGINX replicas to deploy
+##
+replicaCount: 1
+
+
+>helm install nginx-app bitnami/nginx -n dev --version=13.1.5 --set replicaCount=5
+NAME: nginx-app
+LAST DEPLOYED: Mon Nov 24 17:31:59 2025
+NAMESPACE: dev
+STATUS: deployed
+REVISION: 1                         <== rev 1
+DESCRIPTION: Install complete
+TEST SUITE: None
+NOTES:
+CHART NAME: nginx
+CHART VERSION: 13.1.5
+APP VERSION: 1.23.1
+
+>helm upgrade nginx-app bitnami/nginx --version=13.1.8 -n dev
+Release "nginx-app" has been upgraded. Happy Helming!
+NAME: nginx-app
+LAST DEPLOYED: Mon Nov 24 17:38:29 2025
+NAMESPACE: dev
+STATUS: deployed
+REVISION: 2                      <== rev 2
+DESCRIPTION: Upgrade complete
+TEST SUITE: None
+NOTES:
+CHART NAME: nginx
+CHART VERSION: 13.1.8
+APP VERSION: 1.23.1
+
+>k -n dev get pods
+
+>helm un nginx-app -n dev

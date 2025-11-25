@@ -1,0 +1,28 @@
+>kind create cluster --name ckad
+
+as we need to tweak the cluster configs, docker desktop is not a good option as it is managed internally. makes it not suitable for CKAD exam.
+
+
+>kubectl api-resources --sort-by=name
+NAME                                SHORTNAMES   APIVERSION                        NAMESPACED   KIND
+apiservices                                      apiregistration.k8s.io/v1         false        APIService
+bindings                                         v1                                true         Binding
+certificatesigningrequests          csr          certificates.k8s.io/v1            false        CertificateSigningRequest
+clusterrolebindings                              rbac.authorization.k8s.io/v1      false        ClusterRoleBinding
+clusterroles                                     rbac.authorization.k8s.io/v1      false        ClusterRole
+componentstatuses                   cs           v1                                false        ComponentStatus
+configmaps                          cm           v1                                true         ConfigMap
+controllerrevisions                              apps/v1                           true         ControllerRevision
+cronjobs                            cj           batch/v1                          true         CronJob
+
+>docker ps --format "table {{.Names}}"
+
+NAMES
+ckad-control-plane
+
+#To enable beta api versions, you must change the k8s control plane config
+>docker exec -it ckad-control-plane bash
+root@ckad-control-plane:/#
+
+>vim /etc/kubernetes/manifests/kube-apiserver.yaml
+add --runtime-config=<group>/<beta|alpha-version> to enable beta and/or alpha apis
