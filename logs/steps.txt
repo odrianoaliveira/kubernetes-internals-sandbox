@@ -1,0 +1,43 @@
+>k apply -f demo/node_app/node-app.yaml
+pod/node-app created
+
+>k get all
+NAME           READY   STATUS             RESTARTS     AGE
+pod/node-app   1/2     CrashLoopBackOff   1 (9s ago)   54s
+
+# jsonpath is important for the exam!!!
+>k get pods node-app -o jsonpath='{.spec.containers[*].name}'
+app logger%
+
+>k logs node-app -c app
+node:internal/modules/cjs/loader:1210
+  throw err;
+  ^
+
+Error: Cannot find module '/usr/src/app/server.js'
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+    at Module._load (node:internal/modules/cjs/loader:1038:27)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:164:12)
+    at node:internal/main/run_main_module:28:49 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+
+Node.js v20.19.6
+
+>k delete -f demo/node_app/node-app.yaml
+pod "node-app" deleted from default namespace
+
+
+> replace "server.js" by "app.js" in pod manifest
+
+>k apply -f demo/node_app/node-app.yaml
+
+>k get pods
+NAME       READY   STATUS    RESTARTS   AGE
+node-app   2/2     Running   0          18s
+
+>logs node-app
+Defaulted container "app" out of: app, logger, setup (init)
+App.js loaded
+App.js running
