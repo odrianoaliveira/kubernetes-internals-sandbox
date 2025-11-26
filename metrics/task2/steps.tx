@@ -1,0 +1,36 @@
+> vim web-app.yaml
+
+> k apply -f web-app.yaml
+deployment.apps/web-app created
+
+> k rollout status deploy web-app
+Waiting for deployment "web-app" rollout to finish: 0 of 3 updated replicas are available...
+Waiting for deployment "web-app" rollout to finish: 1 of 3 updated replicas are available...
+Waiting for deployment "web-app" rollout to finish: 2 of 3 updated replicas are available...
+deployment "web-app" successfully rolled out
+
+> k rollout history deployment web-app
+deployment.apps/web-app
+REVISION  CHANGE-CAUSE
+1         <none>
+
+>k set image deployments web-app nginx=nginx:latest
+deployment.apps/web-app image updated
+
+>k rollout status deploy web-app
+Waiting for deployment "web-app" rollout to finish: 1 out of 3 new replicas have been updated...
+Waiting for deployment "web-app" rollout to finish: 1 out of 3 new replicas have been updated...
+Waiting for deployment "web-app" rollout to finish: 1 out of 3 new replicas have been updated...
+Waiting for deployment "web-app" rollout to finish: 2 out of 3 new replicas have been updated...
+Waiting for deployment "web-app" rollout to finish: 2 out of 3 new replicas have been updated...
+Waiting for deployment "web-app" rollout to finish: 2 out of 3 new replicas have been updated...
+Waiting for deployment "web-app" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "web-app" rollout to finish: 1 old replicas are pending termination...
+deployment "web-app" successfully rolled out
+
+>k rollout history deploy web-app
+deployment.apps/web-app
+REVISION  CHANGE-CAUSE
+1         <none>
+2         <none>
+
