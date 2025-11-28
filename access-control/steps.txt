@@ -1,0 +1,70 @@
+# Role
+>kubectl create role pod-creator --verb=get,list,create --resource=pods --dry-run=client -o yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: pod-creator
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - get
+  - list
+  - create
+
+
+# Cluster role
+>kubectl create clusterrole pod-creator --verb=get,list,create --resource=pods --dry-run=client -o yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: pod-creator
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - get
+  - list
+  - create
+
+# Binding role
+>k create rolebinding bind-pod-creator --role=pod-creator --user=adriano --namespace=dev --dry-run=client -o yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: bind-pod-creator
+  namespace: dev
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: pod-creator
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: adriano
+
+# Binding cluster role
+>k create clusterrolebinding bind-pod-creator --clusterrole=pod-creator --user=adriano --dry-run=client -o yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: bind-pod-creator
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: pod-creator
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: adriano
+
+>k auth can-i get pods
+yes
+
+>k auth can-i get pods --as=adriano --namespace=default
+no
+
