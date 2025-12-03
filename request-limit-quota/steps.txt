@@ -1,0 +1,6 @@
+>k create ns staging
+
+namespace/staging created
+
+
+
