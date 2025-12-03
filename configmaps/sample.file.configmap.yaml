@@ -1,0 +1,11 @@
+apiVersion: v1
+data:
+  dummy.sh: |
+    #!/bin/bash
+
+    echo "this is a dummy script"
+    exit 0
+kind: ConfigMap
+metadata:
+  name: my-configmap-from-file
+

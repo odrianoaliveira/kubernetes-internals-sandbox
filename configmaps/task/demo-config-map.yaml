@@ -1,0 +1,9 @@
+apiVersion: v1
+data:
+  app_name: demo-app
+  feature_flag: enabled
+  log_level: debug
+  timeout: "7"
+kind: ConfigMap
+metadata:
+  name: demo-config

@@ -1,0 +1,10 @@
+> k create configmap my-configmap --from-literal=KEY=value --dry-run=client -o yaml > sample.configmap.yaml
+
+> k create configmap my-configmap-from-file --from-file=dummy.sh --dry-run=client -o yaml > sample.file.configmap.yaml
+
+
+#Task
+
+> k -n backend create configmap demo-config --from-env-file=config.props --dry-run=client -o yaml > demo-config-map.yaml
+
+
