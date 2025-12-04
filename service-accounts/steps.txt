@@ -1,0 +1,9 @@
+> k create serviceaccount pod-viewer -n ops --dry-run=client -o yaml > pod-viewer.sa.yaml
+
+> k create role pod-reader \
+         --namespace=ops \
+         --resource=pods \
+         --verb=get,watch,list \
+         --dry-run=client -o yaml > pod-reader-role.yaml
+
+> k create rolebinding pod-reader-rolebinding --namespace ops --role=pod-reader --serviceaccount=ops:pod-viewer --dry-run=client -o yaml > pod-reader.rolebinding.yaml
