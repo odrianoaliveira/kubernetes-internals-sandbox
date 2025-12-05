@@ -1,0 +1,3 @@
+ During the CKAD exam most likely we need to exec sh into the pod and check if securityContext has been applied and works as expected.
+
+ check the image
