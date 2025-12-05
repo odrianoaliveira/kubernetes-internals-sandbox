@@ -1,3 +1,14 @@
- During the CKAD exam most likely we need to exec sh into the pod and check if securityContext has been applied and works as expected.
+During the CKAD exam most likely we need to exec sh into the pod and check if securityContext has been applied and works as expected.
 
- check the image
+check the image
+
+
+#PodAdminission
+
+> k label namespace test pod-security.kubernetes.io/warn=baseline
+
+> vi violation-pod.yaml
+> k apply -f violation-pod.yaml
+Warning: would violate PodSecurity "baseline:latest": non-default capabilities (container "bad-busybox" must not include "NET_ADMIN" in securityContext.capabilities.add), host namespaces (hostPID=true), hostPath volumes (volume "host-vol")
+pod/bad-pod created
+

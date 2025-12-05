@@ -1,0 +1,21 @@
+> k create ns production-test
+
+> kubectl label --overwrite ns production-test \
+  pod-security.kubernetes.io/warn=restricted \
+  pod-security.kubernetes.io/audit=restricted
+
+> k get ns production-test --show-labels
+
+> k apply -f bad-pod.yaml
+
+Warning: would violate PodSecurity "restricted:latest": host namespaces (hostPID=true), allowPrivilegeEscalation != false (container "bad-busybox" must set securityContext.allowPrivilegeEscalation=false), unrestricted capabilities (container "bad-busybox" must set securityContext.capabilities.drop=["ALL"]; container "bad-busybox" must not include "NET_ADMIN" in securityContext.capabilities.add), restricted volume types (volume "host-vol" uses restricted volume type "hostPath"), runAsNonRoot != true (pod or container "bad-busybox" must set securityContext.runAsNonRoot=true), runAsUser=0 (container "bad-busybox" must not set runAsUser=0), seccompProfile (pod or container "bad-busybox" must set securityContext.seccompProfile.type to "RuntimeDefault" or "Localhost")
+pod/bad-pod created   <== pod was created
+
+
+> kubectl label --overwrite ns production-test \
+  pod-security.kubernetes.io/enforce=restricted
+
+> k apply -f bad-pod.yaml
+Error from server (Forbidden): error when creating "bad-pod.yaml": pods "bad-pod" is forbidden: violates PodSecurity "restricted:latest": host namespaces (hostPID=true), allowPrivilegeEscalation != false (container "bad-busybox" must set securityContext.allowPrivilegeEscalation=false), unrestricted capabilities (container "bad-busybox" must set securityContext.capabilities.drop=["ALL"]; container "bad-busybox" must not include "NET_ADMIN" in securityContext.capabilities.add), restricted volume types (volume "host-vol" uses restricted volume type "hostPath"), runAsNonRoot != true (pod or container "bad-busybox" must set securityContext.runAsNonRoot=true), runAsUser=0 (container "bad-busybox" must not set runAsUser=0), seccompProfile (pod or container "bad-busybox" must set securityContext.seccompProfile.type to "RuntimeDefault" or "Localhost")
+
+
